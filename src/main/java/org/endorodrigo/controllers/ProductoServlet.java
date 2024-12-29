@@ -6,56 +6,65 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.endorodrigo.model.Producto;
+import org.endorodrigo.service.LoginService;
+import org.endorodrigo.service.LoginServiceSesionImpl;
 import org.endorodrigo.service.ProductoService;
 import org.endorodrigo.service.ProductoServiceImp;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Optional;
 
-@WebServlet({"/productos.xls","/productos.html"})
+@WebServlet({"/productos","/productos.html"})
 public class ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductoService service = new ProductoServiceImp();
-        List<Producto> producto = service.listar();
-        String servletPath = req.getServletPath();
+        List<Producto> productos = service.listar();
 
-        try(PrintWriter out = resp.getWriter()){
+        LoginService auth = new LoginServiceSesionImpl();
+        Optional<String> usernameOptional = auth.getUsername(req);
 
-                out.println("<!DOCTYPE html>");
-                out.println("<html lang=\"en\">");
-                out.println("<head>");
-                out.println("<meta charset=\"UTF-8\">");
-                out.println("<title>Listado de porductos</title>");
-                out.println("</head>");
-                out.println(" <body>");
-                out.println("<h1>Listado de porductos!</h1>");
-                out.println("<p><a href=\""+req.getContextPath()+"/productos.xls"+"\">Exportar archivo de excel</></p>");
-                out.println("<p><a href=\""+req.getContextPath()+"/json"+"\">Mostrar json</></p>");
-                out.println("<table>");
+        resp.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = resp.getWriter()) {
+
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("    <head>");
+            out.println("        <meta charset=\"UTF-8\">");
+            out.println("        <title>Listado de Productos</title>");
+            out.println("    </head>");
+            out.println("    <body>");
+            out.println("        <h1>Listado de Productos!</h1>");
+            if(usernameOptional.isPresent()) {
+                out.println("<div style='color: blue;'>Hola " + usernameOptional.get() + " Bienvenido!</div>");
+            }
+            out.println("<table>");
+            out.println("<tr>");
+            out.println("<th>id</th>");
+            out.println("<th>nombre</th>");
+            out.println("<th>tipo</th>");
+            if(usernameOptional.isPresent()) {
+                out.println("<th>precio</th>");
+            }
+            out.println("</tr>");
+            productos.forEach(p -> {
                 out.println("<tr>");
-                out.println("<th>ID</th>");
-                out.println("<th>NAME</th>");
-                out.println("<th>TIPE</th>");
-                out.println("<th>PRICE</th>");
+                out.println("<td>" + p.getId() + "</td>");
+                out.println("<td>" + p.getName() + "</td>");
+                out.println("<td>" + p.getTypeP() + "</td>");
+                if(usernameOptional.isPresent()) {
+                    out.println("<td>" + p.getPrice() + "</td>");
+                }
                 out.println("</tr>");
-                producto.forEach(
-                        p -> {
-                            out.println("<tr>");
-                            out.println("<td>"+ p.getId() +"</td>");
-                            out.println("<td>"+ p.getName() +"</td>");
-                            out.println("<td>"+ p.getTypeP() +"</td>");
-                            out.println("<td>"+ p.getPrice() +"</td>");
-                            out.println("</tr>");
-                        }
-                );
-                out.println("</table>");
-                out.println(" </body>");
-                out.println(" </html>");
-
-
-
+            });
+            out.println("</table>");
+            out.println("    </body>");
+            out.println("</html>");
         }
     }
+
 }
+

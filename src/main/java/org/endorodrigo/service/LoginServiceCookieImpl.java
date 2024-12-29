@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceCookieImpl implements LoginService {
     @Override
     public Optional<String> getUsername(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies() != null ? req.getCookies(): new Cookie[0];
