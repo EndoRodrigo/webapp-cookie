@@ -1,32 +1,34 @@
 package org.endorodrigo.controllers;
 
+import org.endorodrigo.services.LoginServiceSessionImpl;
+import org.endorodrigo.services.ProductoService;
+import org.endorodrigo.services.LoginService;
+import org.endorodrigo.services.ProductoServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.endorodrigo.model.Producto;
-import org.endorodrigo.service.LoginService;
-import org.endorodrigo.service.LoginServiceSesionImpl;
-import org.endorodrigo.service.ProductoService;
-import org.endorodrigo.service.ProductoServiceImp;
-
+import org.endorodrigo.models.Producto;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet({"/productos","/productos.html"})
+@WebServlet({"/productos.html", "/productos"})
 public class ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductoService service = new ProductoServiceImp();
+        ProductoService service = new ProductoServiceImpl();
         List<Producto> productos = service.listar();
 
-        LoginService auth = new LoginServiceSesionImpl();
+        LoginService auth;
+        auth = new LoginServiceSessionImpl();
         Optional<String> usernameOptional = auth.getUsername(req);
 
+        String mensajeRequest = (String) req.getAttribute("mensaje");
+        String mensajeApp = (String) getServletContext().getAttribute("mensaje");
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
 
@@ -41,32 +43,35 @@ public class ProductoServlet extends HttpServlet {
             if(usernameOptional.isPresent()) {
                 out.println("<div style='color: blue;'>Hola " + usernameOptional.get() + " Bienvenido!</div>");
             }
-            out.println("<table>");
+                out.println("<table>");
             out.println("<tr>");
-            out.println("<th>Id</th>");
-            out.println("<th>Nombre</th>");
-            out.println("<th>Tipo</th>");
+            out.println("<th>id</th>");
+            out.println("<th>nombre</th>");
+            out.println("<th>tipo</th>");
             if(usernameOptional.isPresent()) {
-                out.println("<th>Precio</th>");
-                out.println("<th>Agregar</th>");
+                out.println("<th>precio</th>");
+                out.println("<th>agregar</th>");
             }
             out.println("</tr>");
             productos.forEach(p -> {
                 out.println("<tr>");
                 out.println("<td>" + p.getId() + "</td>");
-                out.println("<td>" + p.getName() + "</td>");
-                out.println("<td>" + p.getTypeP() + "</td>");
+                out.println("<td>" + p.getNombre() + "</td>");
+                out.println("<td>" + p.getTipo() + "</td>");
                 if(usernameOptional.isPresent()) {
-                    out.println("<td>" + p.getPrice() + "</td>");
-                    out.println("<td><a href=\""+req.getContextPath()+"/agregar-carro?id="+p.getId()+"\">Agregar al carro</a></td>");
+                    out.println("<td>" + p.getPrecio() + "</td>");
+                    out.println("<td><a href=\""
+                            + req.getContextPath()
+                            + "/agregar-carro?id=" + p.getId()
+                            + "\">agregar al carro</a></td>");
                 }
                 out.println("</tr>");
             });
             out.println("</table>");
+            out.println("<p>" + mensajeApp + "</p>");
+            out.println("<p>" + mensajeRequest + "</p>");
             out.println("    </body>");
             out.println("</html>");
         }
     }
-
 }
-

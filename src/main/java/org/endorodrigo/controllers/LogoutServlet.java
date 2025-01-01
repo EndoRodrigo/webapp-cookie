@@ -1,11 +1,11 @@
 package org.endorodrigo.controllers;
 
+import org.endorodrigo.services.LoginServiceSessionImpl;
+import org.endorodrigo.services.LoginService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.endorodrigo.service.LoginService;
-import org.endorodrigo.service.LoginServiceCookieImpl;
-import org.endorodrigo.service.LoginServiceSesionImpl;
+
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LoginService auth = new LoginServiceSesionImpl();
+        LoginService auth = new LoginServiceSessionImpl();
         Optional<String> username = auth.getUsername(req);
         if (username.isPresent()) {
             HttpSession session = req.getSession();

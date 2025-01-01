@@ -1,4 +1,4 @@
-package org.endorodrigo.model;
+package org.endorodrigo.models;
 
 import java.util.Objects;
 
@@ -27,16 +27,16 @@ public class ItemCarro {
         this.producto = producto;
     }
 
-    public int getImporte(){
-        return cantidad * producto.getPrice();
-    }
-
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemCarro that = (ItemCarro) o;
-        return Objects.equals(producto.getId(), that.producto.getId()) &&
-                Objects.equals(producto.getName(), that.producto.getName());
+        ItemCarro itemCarro = (ItemCarro) o;
+        return Objects.equals(producto.getId(), itemCarro.producto.getId())
+                && Objects.equals(producto.getNombre(), itemCarro.producto.getNombre());
     }
 
+    public int getImporte() {
+        return cantidad * producto.getPrecio();
+    }
 }

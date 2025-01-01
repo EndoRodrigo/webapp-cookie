@@ -1,4 +1,4 @@
-package org.endorodrigo.service;
+package org.endorodrigo.services;
 
 import jakarta.servlet.http.HttpServletRequest;
 
