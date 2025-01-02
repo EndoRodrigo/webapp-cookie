@@ -11,8 +11,10 @@ import org.endorodrigo.models.ItemCarro;
 import org.endorodrigo.models.Producto;
 import org.endorodrigo.services.ProductoService;
 import org.endorodrigo.services.ProductoServiceImpl;
+import org.endorodrigo.services.ProductoServiceJdbcImpl;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Optional;
 
 @WebServlet("/agregar-carro")
@@ -21,7 +23,8 @@ public class AgregarCarroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.parseLong(req.getParameter("id"));
-        ProductoService service = new ProductoServiceImpl();
+        Connection conn = (Connection) req.getAttribute("conn");
+        ProductoService service = new ProductoServiceJdbcImpl(conn);
         Optional<Producto> producto = service.porId(id);
         if (producto.isPresent()) {
             ItemCarro item = new ItemCarro(1, producto.get());
