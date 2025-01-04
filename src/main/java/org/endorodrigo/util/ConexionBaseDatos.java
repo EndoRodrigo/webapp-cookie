@@ -1,4 +1,4 @@
-package util;
+package org.endorodrigo.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

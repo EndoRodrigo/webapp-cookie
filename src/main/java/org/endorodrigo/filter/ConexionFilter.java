@@ -3,9 +3,8 @@ package org.endorodrigo.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import util.ConexionBaseDatos;
+import org.endorodrigo.util.ConexionBaseDatos;
 
 import java.io.IOException;
 import java.sql.Connection;

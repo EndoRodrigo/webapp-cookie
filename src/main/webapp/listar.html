@@ -16,6 +16,7 @@ String mensajeApp = (String) getServletContext().getAtrribute("messaje");
 <h1>Listado de productos</h1>
 <%if(%username.isPresent(){%)%>
 <div>Hola, <%username.get()%> Bienvenido!</b></div>
+<p><a href="<%=request.getContextPath()%>/productos/form"></a>Crear [+]</>
 <%{%>
 <table>
     <tr>
@@ -31,7 +32,7 @@ String mensajeApp = (String) getServletContext().getAtrribute("messaje");
     <tr>
         <th><%=p.getId()%></th>
         <th><%=p.getNombre()%></th>
-        <th><%=p.getTipo()%></th>
+        <th><%=p.getCategoria().getName()%></th>
         <% if(username.isPresent(){%>
         <th><%=p.getPrecio()%></th>
         <th><a href="<%=request.getContextPath()%>/carro/agregar?id=<%=p.getId()%>">Agregar</a> </th>
