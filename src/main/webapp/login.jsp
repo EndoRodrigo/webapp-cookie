@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Iniciar sesión</h1>
-<form action="/webapp-session/login" method="post">
+<form action="${pageContext.request.contextPath}/login" method="post">
   <div>
     <label for="username">Username</label>
     <div>

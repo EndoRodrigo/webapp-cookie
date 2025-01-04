@@ -8,7 +8,7 @@
     <title>Listado de productos</title>
 </head>
 <body>
-<h1>Listado de productos</h1>
+<h1>Listado de productos V2</h1>
 <c:if test="${username.present}">
    <div>Hola ${username.get()}, bienvenido!</div>
    <p><a href="${pageContext.request.contextPath}/productos/form">crear [+]</a></p>
