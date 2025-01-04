@@ -36,10 +36,8 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
     @Override
     public Producto forID(Long id) throws SQLException {
         String Query = """
-                    SELECT P.ID, P.NAME, P.PRICE, C.NAME AS CATEGORIA
-                    FROM PRODUCT AS P
-                    INNER JOIN CATEGORY AS C ON P.CATEGORIA_ID = C.ID
-                    WHERE P.ID = ?
+                    SELECT p.*, c.name as categoria FROM product as p\s
+                    inner join category as c ON (p.categoria_id = c.id) WHERE p.id = ?
                     """;
         Producto productos = null;
         try(PreparedStatement stmt = conn.prepareStatement(Query)) {
