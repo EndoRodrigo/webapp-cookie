@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Optional;
 
-@WebServlet("/agregar-carro")
+@WebServlet("/agregar/carro")
 public class AgregarCarroServlet extends HttpServlet {
 
     @Override

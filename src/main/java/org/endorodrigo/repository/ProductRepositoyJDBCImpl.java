@@ -20,9 +20,9 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
         List<Producto> productos = new ArrayList<>();
         try(Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery("""
-                    SELECT P.ID, P.NAME, P.PRICE, C.NAME AS CATEGORIA
-                    FROM PRODUCT AS P
-                    INNER JOIN CATEGORIA AS C ON P.CATEGORIA_ID = C.ID;
+                    SELECT p.*, c.name as categoria FROM product as p
+                    inner join category as c
+                    ON (p.categoria_id = c.id) order by p.id ASC
                     """);
 
             while(rs.next()){
@@ -38,7 +38,7 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
         String Query = """
                     SELECT P.ID, P.NAME, P.PRICE, C.NAME AS CATEGORIA
                     FROM PRODUCT AS P
-                    INNER JOIN CATEGORIA AS C ON P.CATEGORIA_ID = C.ID
+                    INNER JOIN CATEGORY AS C ON P.CATEGORIA_ID = C.ID
                     WHERE P.ID = ?
                     """;
         Producto productos = null;
@@ -57,9 +57,9 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
     public void save(Producto producto) throws SQLException {
         String query;
         if (producto.getId() != null && producto.getId() > 0) {
-            query = "update productos set nombre=?, precio=? sku=? categoria_id=? where id=?";
+            query = "update product set name=?, price=? sku=? categoria_id=? where id=?";
         }else{
-            query = "insert into producto(nombre, precio, sku, categoria_id, fecha_registro) values (?,?,?,?,?)";
+            query = "insert into product(name, price, sku, categoria_id, fecha_registro) values (?,?,?,?,?)";
         }
         
         try(PreparedStatement stmt = conn.prepareStatement(query)){
@@ -79,7 +79,7 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
 
     @Override
     public void delite(Long id) throws SQLException {
-        String query = "delete from productos where id = ?";  
+        String query = "delete from product where id = ?";
         try(PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setLong(1, id);
             stmt.executeUpdate();
@@ -91,7 +91,7 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
         Categoria c = new Categoria();
         p.setId(rs.getLong("id"));
         p.setNombre(rs.getNString("name"));
-        p.setPrecio(rs.getInt("precio"));
+        p.setPrecio(rs.getInt("price"));
         p.setSku(rs.getString("sku"));
         p.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
         c.setId(rs.getLong("id"));

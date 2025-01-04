@@ -22,7 +22,7 @@ public class CategoriaRepositoryJdbcImpl implements Repo<Categoria>{
     @Override
     public List<Categoria> getList() throws SQLException {
         List<Categoria> categorias = new ArrayList<>();
-        String query = "select * from categorias";
+        String query = "select * from category";
         try(Statement stmt =  conn.createStatement()){
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {                
@@ -35,7 +35,7 @@ public class CategoriaRepositoryJdbcImpl implements Repo<Categoria>{
     @Override
     public Categoria forID(Long id) throws SQLException {
         Categoria categoria = new Categoria();
-        String query = "select * from categorias where id = ?";
+        String query = "select * from category where id = ?";
         try(PreparedStatement stmt =  conn.prepareStatement(query)){
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -59,8 +59,7 @@ public class CategoriaRepositoryJdbcImpl implements Repo<Categoria>{
     public Categoria getCategoria(ResultSet rs) throws SQLException{
         Categoria c = new Categoria();
         c.setId(rs.getLong("id"));
-        c.setName(rs.getString("nombrr"));
-        c.setDescription(rs.getString("descripcion"));
+        c.setName(rs.getString("name"));
         return c;
     }
     
