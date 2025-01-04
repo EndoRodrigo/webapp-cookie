@@ -55,7 +55,7 @@ public class ProductRepositoyJDBCImpl implements Repo<Producto>{
     public void save(Producto producto) throws SQLException {
         String query;
         if (producto.getId() != null && producto.getId() > 0) {
-            query = "update product set name=?, price=? sku=? categoria_id=? where id=?";
+            query = "update product set name=?, price=?, sku=?, categoria_id=? where id=?";
         }else{
             query = "insert into product(name, price, sku, categoria_id, fecha_registro) values (?,?,?,?,?)";
         }

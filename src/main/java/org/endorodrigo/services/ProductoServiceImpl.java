@@ -24,7 +24,7 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public void elimienar(Long id) {
+    public void eliminar(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

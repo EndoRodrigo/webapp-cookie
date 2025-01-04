@@ -52,7 +52,7 @@ public class ProductoServiceJdbcImpl implements ProductoService{
     }
 
     @Override
-    public void elimienar(Long id) {
+    public void eliminar(Long id) {
         try {
             repositoyJDBC.delite(id);
         } catch (SQLException ex) {

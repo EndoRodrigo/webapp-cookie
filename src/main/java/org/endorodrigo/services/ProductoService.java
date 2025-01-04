@@ -11,7 +11,7 @@ public interface ProductoService {
     Optional<Producto> porId(Long id);
     
     void guardar(Producto producto);
-    void elimienar(Long id);
+    void eliminar(Long id);
             
     List<Categoria> listarCategoria();
     Optional<Categoria> porIdCategoria(Long id);
