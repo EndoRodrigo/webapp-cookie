@@ -1,8 +1,5 @@
-# webapp-cookie
-
-Glosario de términos sobre API Servlet en Jakarta EE
-Servlet:
-
+# Glosario de términos sobre API Servlet en Jakarta EE
+## Servlet:
 Un servlet es una clase Java que maneja las solicitudes y respuestas HTTP. En Jakarta EE, un servlet se utiliza para extender las capacidades de un servidor web, gestionando el procesamiento de las solicitudes del cliente y enviando respuestas adecuadas.
 Jakarta EE (anteriormente Java EE):
 
