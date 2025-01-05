@@ -24,7 +24,7 @@ public class ActualizarCarroServlet extends HttpServlet {
             updateCantidades(req, carro);
         }
 
-        resp.sendRedirect(req.getContextPath() + "/ver-carro");
+        resp.sendRedirect(req.getContextPath() + "/carro/ver");
     }
 
     private void updateProductos(HttpServletRequest request, Carro carro) {
